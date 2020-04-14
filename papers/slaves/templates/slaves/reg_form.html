@@ -1,0 +1,32 @@
+{% extends 'slaves/base_slave.html' %}
+{% block content %}
+        <section>
+            <form>
+                 <fieldset>
+                     <legend>Форма на получения cпецпропуска для автомобиля</legend>
+                     <label>Фамилия Имя Отчество руководителя</label><br>
+                     <input class="input" type="text" placeholder="Введите ФИО руководителя"><br>
+
+                     <label>Контактный телефон руководителя</label><br>
+                     <input class="input" type="tel" placeholder="Введите номер телефона" ><br>
+
+                     <label>Электронный адрес</label><br>
+                     <input class="input" type="email" placeholder="Введите e-mail адресс"><br>
+
+                     <label>Регистрационный номер ТС</label><br>
+                     <td class="reg-number">
+                         <input class="input-numb" type="text" placeholder="A000AA">
+                         <input class="input-reg-numb" type="text" placeholder="89"><br>
+                     </td>
+
+                     <label>Марка и модель ТС</label><br>
+                     <input class="input-name-auto" type="text" placeholder="Tesla">
+                     <input class="input-model-auto" type="text" placeholder="Model X"><br>
+                     <input class="add-on" type="submit" value="Отправить">
+                    <!--<button class="add-on icon-start">Найти</button>-->
+                    <!-- <a href="#more">Подробнее</a> -->
+                 </fieldset>
+
+            </form>
+        </section>
+{% endblock %}

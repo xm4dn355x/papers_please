@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Форма для получения спецпропуска для автомобиля</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="#" class="logo"><img src="/static/img/gerb_shd.png"  alt="Герб города Салехард">
+                <p>Муниципальное Образование<br>город Салехард</p>
+            </a>
+
+            <div class="hot-line">
+                <p >Телефон горячей линии</p>
+                <a href="tel:+79000000000">+7 900 000 00 00</a>
+            </div>
+
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <ul class="social-list">
+            <li class="social-list-item">
+                <a href="https://vk.com/salekhard_adm">ВКонтакте</a>
+            </li>
+
+            <li class="social-list-item">
+                <a href="https://www.instagram.com/salekhard.adm">Instagram</a>
+            </li>
+      </ul>
+    </footer>
+
+</body>
+</html>

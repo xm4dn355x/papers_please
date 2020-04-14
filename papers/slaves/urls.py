@@ -19,4 +19,5 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('reg_form/', views.reg_form, name='reg_form'),
 ]

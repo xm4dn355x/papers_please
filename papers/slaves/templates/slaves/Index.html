@@ -1,0 +1,14 @@
+{% extends 'slaves/base_slave.html' %}
+{% block content %}
+        <section>
+            <form action="{% url 'reg_form' %}">
+                 <fieldset>
+                     <legend>Проверить свою оргазацию в реестре </legend>
+                     <label>Поиск по ИНН</label><br>
+                    <input class="input" type="search" placeholder="Введите ИНН организации">
+                    <button class="add-on icon-start">Найти</button>
+                    <!-- <a href="#more">Подробнее</a> -->
+                 </fieldset>
+            </form>
+        </section>
+{% endblock %}
