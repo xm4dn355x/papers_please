@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <p>Ты пидор</p>
+  {% else %}
+    <p>Пожалуйста авторизуйтесь</p>
+  {% endif %}
+{% endblock %}
