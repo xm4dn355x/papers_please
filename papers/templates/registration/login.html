@@ -22,17 +22,17 @@
 
 <tr>
   <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
+  <td class="input" placeholder="Логин">{{ form.username }}</td>
 </tr>
 
 <tr>
   <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
+  <td class="input" placeholder="Пароль" >{{ form.password }}</td>
 </tr>
 </table>
 
-<input type="submit" value="Вход" />
-<input type="hidden" name="Далее" value="{{ next }}" />
+<input  type="submit" value="Вход" />
+<input class="input" type="hidden" name="Далее" value="{{ next }}" />
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
