@@ -1,4 +1,5 @@
 .idea
 venv
 papers/papers/configs.py
+papers/big_brother/migrations
 Notes.txt
