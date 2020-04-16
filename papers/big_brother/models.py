@@ -11,8 +11,8 @@ class Okveds_list(models.Model):
     Таблица со списком окведов
     """
     okved_number = models.CharField(max_length=20, unique=True, null=False, default='')
-    okved_name = models.CharField(max_length=300, unique=False, null=False, default='')
-    okved_description = models.TextField(unique=False, null=False, default='')
+    okved_name = models.TextField(unique=False, null=False, default='')
+    okved_description = models.TextField(unique=False, null=True, default='')
 
     def __str__(self):
         return f'{self.okved_number}, {self.okved_name}'
