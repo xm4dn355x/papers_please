@@ -1,32 +1,55 @@
 {% extends 'slaves/base_slave.html' %}
 {% block content %}
-        <section>
-            <form>
-                 <fieldset>
-                     <legend>Форма на получения cпецпропуска для автомобиля</legend>
-                     <label>Фамилия Имя Отчество руководителя</label><br>
-                     <input class="input" type="text" placeholder="Введите ФИО руководителя"><br>
+{{ debug_data }}
+{{ okved_status }}
+{% if company.status == 'True' %}
+{{ company.status }}
+    <section>
+        <form>
+            <fieldset>
+                <legend>Форма на получения cпецпропуска для автомобиля</legend>
+                {% if okved_status == 'full' %}
+                    <h1>Род деятельности Вашей компании полностью подходит под критерии выпуска пропусков.
+                        После заполнения данной формы заявка будет предварительно одобрена и будет выпущена в
+                        кратчайшие сроки.</h1>
+                {% elif okved_status == 'half' %}
+                    <h1>Род деятельности Вашей компании не полностью подходит под критерии выпуска пропусков.
+                        После заполнения данной формы Ваша заявка будет находиться на рассмотрении.</h1>
+                {% else %}
+                    <h1>Род деятельности Вашей компании указанный в ОКВЕД полностью не подходит под критерии выпуска
+                        пропусков. После заполнения данной формы Ваша заявка будет рассматриваться коллегиально.</h1>
+                {% endif %}
+                <label>Название организации: {{ company.org_name }}</label><br>
+                <label>Руководитель: {{ company.owner_name }}</label><br><br>
+                <!-- <input class="input" type="text" placeholder="Введите ФИО руководителя"><br> -->
+                <label>Контактный телефон руководителя</label><br>
+                <input class="input" type="tel" placeholder="Введите номер телефона"><br>
 
-                     <label>Контактный телефон руководителя</label><br>
-                     <input class="input" type="tel" placeholder="Введите номер телефона" ><br>
+                <label>Электронный адрес</label><br>
+                <input class="input" type="email" placeholder="Введите e-mail адресс"><br>
 
-                     <label>Электронный адрес</label><br>
-                     <input class="input" type="email" placeholder="Введите e-mail адресс"><br>
+                <label>Регистрационный номер ТС</label><br>
+                <td class="reg-number">
+                    <input class="input-numb" type="text" placeholder="A000AA">
+                    <input class="input-reg-numb" type="text" placeholder="89"><br>
+                </td>
 
-                     <label>Регистрационный номер ТС</label><br>
-                     <td class="reg-number">
-                         <input class="input-numb" type="text" placeholder="A000AA">
-                         <input class="input-reg-numb" type="text" placeholder="89"><br>
-                     </td>
+                <label>Марка и модель ТС</label><br>
+                <input class="input-name-auto" type="text" placeholder="Tesla">
+                <input class="input-model-auto" type="text" placeholder="Model X"><br>
+                <input class="add-on" type="submit" value="Отправить">
+                <!--<button class="add-on icon-start">Найти</button>-->
+                <!-- <a href="#more">Подробнее</a> -->
+            </fieldset>
 
-                     <label>Марка и модель ТС</label><br>
-                     <input class="input-name-auto" type="text" placeholder="Tesla">
-                     <input class="input-model-auto" type="text" placeholder="Model X"><br>
-                     <input class="add-on" type="submit" value="Отправить">
-                    <!--<button class="add-on icon-start">Найти</button>-->
-                    <!-- <a href="#more">Подробнее</a> -->
-                 </fieldset>
-
-            </form>
-        </section>
+        </form>
+    </section>
+{% else %}
+{{ company.status }}
+    <section>
+        <fieldset>
+            <label>По данным nalog.ru Ваше юридическое лицо упразднено, либо находится на стадии ликвидации.</label>
+        </fieldset>
+    </section>
+{% endif %}
 {% endblock %}
