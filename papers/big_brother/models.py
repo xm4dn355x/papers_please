@@ -40,7 +40,7 @@ class Legal_entities(models.Model):
     okved_id = models.ForeignKey('Okveds_list', null=True, on_delete=models.SET)
     tel = models.BigIntegerField(unique=False, null=False, default='+700000000000')
     email = models.EmailField(max_length=254, unique=False, null=False, default='none@email.debil')
-    status = models.CharField(max_length=64, unique=False, null=False, default='В ожидании проверки')
+    status = models.CharField(max_length=64, unique=False, null=False, default='Неизвестен')
 
     def __str__(self):
         return self.org_name
