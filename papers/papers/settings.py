@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'big_brother',
     'gestapo',
     'slaves',
+    'fronttesting',
 ]
 
 MIDDLEWARE = [
