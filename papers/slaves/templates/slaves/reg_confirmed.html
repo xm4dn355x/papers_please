@@ -1,5 +1,10 @@
 {% extends 'slaves/base_slave.html' %}
 {% block content %}
-    {{ debug_data }}
-    <p>Форма успешно отправлена</p>
+    <p>Форма успешно отправлена<br><br>ИНН организации: {{ inn }}<br>
+    Телефон: {{ tel }}<br>
+    E-mail: {{ email }}<br>
+    Номер ПТС: {{ pts_number }}<br>
+    Регистрационный номер ТС: {{ license_plate }}<br>
+    Марка автомобиля: {{ brand }}
+    Модель автомобиля: {{ model }}</p>
 {% endblock %}

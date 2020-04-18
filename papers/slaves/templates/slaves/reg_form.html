@@ -1,12 +1,11 @@
 {% extends 'slaves/base_slave.html' %}
 {% block content %}
-{{ debug_data }}
-{{ okved_status }}
 {% if company.status == 'True' %}
 {{ company.status }}
     <section>
         <form method="post" action="{% url 'reg_confirmed' %}">
             {% csrf_token %}
+            <input class="input" name="inn" type="inn" style="display:None;" value="{{ inn }}">
             <fieldset>
                 <legend>Форма на получения cпецпропуска для автомобиля</legend>
                 {% if okved_status == 'full' %}
@@ -24,20 +23,22 @@
                 <label>Руководитель: {{ company.owner_name }}</label><br><br>
                 <!-- <input class="input" type="text" placeholder="Введите ФИО руководителя"><br> -->
                 <label>Контактный телефон руководителя</label><br>
-                <input class="input" type="tel" placeholder="Введите номер телефона"><br>
+                <input class="input" name="tel" type="tel" placeholder="Введите номер телефона"><br>
 
                 <label>Электронный адрес</label><br>
-                <input class="input" type="email" placeholder="Введите e-mail адресс"><br>
+                <input class="input" name="email" type="email" placeholder="Введите e-mail адресс"><br>
+
+                <label>Номер ПТС</label><br>
+                <input class="input" name="pts_number" type="text" placeholder="0000000000"><br>
 
                 <label>Регистрационный номер ТС</label><br>
-                <td class="reg-number">
-                    <input class="input-numb" type="text" placeholder="A000AA">
-                    <input class="input-reg-numb" type="text" placeholder="89"><br>
-                </td>
+                <input class="input-numb" name="license_plate_number" type="text" placeholder="A000AA">
+                <input class="input-numb" name="license_plate_region" type="number" placeholder="89"><br>
 
                 <label>Марка и модель ТС</label><br>
-                <input class="input-name-auto" type="text" placeholder="Tesla">
-                <input class="input-model-auto" type="text" placeholder="Model X"><br>
+                <input class="input-name-auto" name="brand" type="text" placeholder="Tesla">
+                <input class="input-model-auto" name="model" type="text" placeholder="Model X"><br>
+                <textarea name="comment" placeholder="Введите комментарий, чтоб нам было проще понять цель получения пропуска для Вас"></textarea><br>
                 <input class="add-on" type="submit" value="Отправить">
                 <!--<button class="add-on icon-start">Найти</button>-->
                 <!-- <a href="#more">Подробнее</a> -->

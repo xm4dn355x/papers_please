@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from big_brother.models import Okveds_list, Okveds_allowed, Legal_entities, Cars, L_e_requests, L_e_passes
+from big_brother.models import Okveds_list, Okveds_allowed, Companies, Cars, Car_requests, Car_passes
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_protect
@@ -31,8 +31,8 @@ def reg_form(request):
             context = {'alert': 'Неправильный ИНН!'}
             return HttpResponse(template.render(context, request))
         try:
-            company = Legal_entities.objects.get(inn=inputed_inn)
-        except Legal_entities.DoesNotExist:
+            company = Companies.objects.get(inn=inputed_inn)
+        except Companies.DoesNotExist:
             try:
                 parsed_data = dadata_parser(inputed_inn)
             except:
@@ -45,7 +45,7 @@ def reg_form(request):
                 founded_okved_id = Okveds_list.objects.create(okved_number=parsed_data['okved'],
                                                               okved_name='ДАННЫЕ ОТСУТСТВУЮТ! НЕОБХОДИМО ЗАПОЛНИТЬ!',
                                                               okved_description='ОПИСАНИЕ ОТСУТСТВУЕТ!')
-            company = Legal_entities.objects.create(inn=inputed_inn,
+            company = Companies.objects.create(inn=inputed_inn,
                                                     org_name=parsed_data['org_name'],
                                                     owner_name=parsed_data['owner_name'],
                                                     okved_id=founded_okved_id,
@@ -54,6 +54,7 @@ def reg_form(request):
         template = loader.get_template('slaves/reg_form.html')
         context = {
             'debug_data': inputed_inn,
+            'inn': inputed_inn,
             'company': company,
             'okved_status': okved_checker(company.okved_id)
         }
@@ -67,9 +68,45 @@ def reg_form(request):
 @csrf_protect
 def reg_confirmed(request):
     if request.method == 'POST':
+        query = request.POST
+        inn = query.get('inn')
+        tel = query.get('tel')
+        email = query.get('email')
+        pts_number = query.get('pts_number')
+        license_plate_number = query.get('license_plate_number')
+        license_plate_region = query.get('license_plate_region')
+        license_plate = str(license_plate_number) + str(license_plate_region)
+        brand = query.get('brand')
+        model = query.get('model')
+        comment = query.get('comment')
+        company = Companies.objects.get(inn=inn)
+        try:
+            car = Cars.objects.get(license_plate=license_plate)
+        except Cars.DoesNotExist:
+            car = Cars.objects.create(company_id=company,
+                                      pts_number=pts_number,
+                                      license_plate=license_plate,
+                                      brand=brand,
+                                      model=model)
+        try:
+            car_request = Car_requests.objects.get(car_id=car)
+            # TODO: Организовать логику проверки статуса заявки. Если пропуск действителен, то отправляем на главную и говорим, что пропуск на автомобиль действителен и выводим номер пропуска, если пропуск просрочен, то создаем новую заявку на пропуск, если бля там еще что-нибудь придумай нахуй.
+        except Car_requests.DoesNotExist:
+            car_request = Car_requests.objects.create(company_id=company,
+                                                      car_id=car,
+                                                      status='В ожидании проверки',
+                                                      comment=comment)
         template = loader.get_template('slaves/reg_confirmed.html')
         context = {
-            'debug_data': 'Debug',
+            'debug_data': '',
+            'inn': inn,
+            'tel': tel,
+            'email': email,
+            'pts_number': pts_number,
+            'license_plate': license_plate,
+            'brand': brand,
+            'model': model,
+            'comment': comment
         }
         return HttpResponse(template.render(context, request))
     else:

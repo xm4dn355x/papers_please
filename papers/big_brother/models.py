@@ -30,7 +30,7 @@ class Okveds_allowed(models.Model):
         return f'{self.okved_id}, {self.reason}'
 
 
-class Legal_entities(models.Model):
+class Companies(models.Model):
     """
     Таблица с организациями.
     """
@@ -50,7 +50,7 @@ class Cars(models.Model):
     """
     Таблица с автомобилями организаций
     """
-    l_e_id = models.ForeignKey('Legal_entities', null=True, on_delete=models.SET)
+    company_id = models.ForeignKey('Companies', null=True, on_delete=models.SET)
     pts_number = models.CharField(unique=True, max_length=15, null=False)
     license_plate = models.CharField(unique=True, max_length=9, null=False)
     brand = models.CharField(unique=False, max_length=64, null=False, default='Марка не указана')
@@ -60,26 +60,26 @@ class Cars(models.Model):
         return f'{self.license_plate}, {self.brand} {self.model}'
 
 
-class L_e_requests(models.Model):
+class Car_requests(models.Model):
     """
     Список заявок организаций
     """
-    l_e_id = models.ForeignKey('Legal_entities', null=True, on_delete=models.SET)
+    company_id = models.ForeignKey('Companies', null=True, on_delete=models.SET)
     car_id = models.ForeignKey('Cars', null=True, on_delete=models.SET)
     status = models.CharField(unique=False, max_length=64, default='В ожидании проверки')
-    comment = models.CharField(unique=FileExistsError, max_length=256, default='Еще не обработана')
+    comment = models.TextField(unique=False)
 
     def __str__(self):
-        return f'{self.l_e_id}, {self.car_id} {self.status}'
+        return f'{self.company_id}, {self.car_id} {self.status}'
 
 
-class L_e_passes(models.Model):
+class Car_passes(models.Model):
     """
     Список пропусков для юридических лиц
     """
-    l_e_id = models.ForeignKey('Legal_entities', null=True, on_delete=models.SET)
+    company_id = models.ForeignKey('Companies', null=True, on_delete=models.SET)
     car_id = models.ForeignKey('Cars', null=True, on_delete=models.SET)
-    req_id = models.ForeignKey('L_e_requests', null=True, on_delete=models.SET)
+    req_id = models.ForeignKey('Car_requests', null=True, on_delete=models.SET)
     pass_time = models.DateField(unique=False, null=False, default=now)
     status = models.CharField(unique=False, max_length=64, default='Пропуск действителен')
 
