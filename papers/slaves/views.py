@@ -5,9 +5,10 @@ from django.shortcuts import render
 from big_brother.models import Okveds_list, Okveds_allowed, Legal_entities, Cars, L_e_requests, L_e_passes
 from django.http import HttpResponse
 from django.template import loader
+from django.views.decorators.csrf import csrf_protect
+from django.template.context_processors import csrf
 from papers.configs import DADATA_API_KEY
 import json
-import re
 import requests
 
 
@@ -55,6 +56,20 @@ def reg_form(request):
             'debug_data': inputed_inn,
             'company': company,
             'okved_status': okved_checker(company.okved_id)
+        }
+        return HttpResponse(template.render(context, request))
+    else:
+        template = loader.get_template('slaves/index.html')
+        context = {'alert': 'Здесь Вас не должно быть.'}
+        return HttpResponse(template.render(context, request))
+
+
+@csrf_protect
+def reg_confirmed(request):
+    if request.method == 'POST':
+        template = loader.get_template('slaves/reg_confirmed.html')
+        context = {
+            'debug_data': 'Debug',
         }
         return HttpResponse(template.render(context, request))
     else:

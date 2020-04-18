@@ -5,7 +5,8 @@
 {% if company.status == 'True' %}
 {{ company.status }}
     <section>
-        <form>
+        <form method="post" action="{% url 'reg_confirmed' %}">
+            {% csrf_token %}
             <fieldset>
                 <legend>Форма на получения cпецпропуска для автомобиля</legend>
                 {% if okved_status == 'full' %}

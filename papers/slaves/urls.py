@@ -20,4 +20,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('reg_form/', views.reg_form, name='reg_form'),
+    path('reg_confirmed/', views.reg_confirmed, name='reg_confirmed'),
 ]
