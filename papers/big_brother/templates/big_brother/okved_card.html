@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Карточка запроса</title>
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="request_card">
+        <fieldset>
+            <form method="post" action="{% url 'okveds_list' %}" class="nav_request_card">
+                {% csrf_token %}
+                <legend>Карточка ОКВЕДа</legend>
+                <br>
+                <label class="name_org">
+                    <input name="okved_id" type="text" style="display:None;" value="{{ okved.id }}">
+                    {{ okved.okved_number }}
+                </label><br><br>
+                <input name="okved_name" type="text" value="{{ okved.okved_name }}"><br><br>
+                {% if okved.description == 'None' %}
+                    <input name="okved_description" type="text" style="display:None;" value="{{ okved.okved_description }}">
+                {% else %}
+                    <input name="okved_description" type="text" value="{{ okved.okved_description }}"><br><br>
+                {% endif %}
+                <input class="add-on" type="submit" name="submit" value="Сохранить">
+            </form>
+        </fieldset>
+    </section>
+
+</main>
+
+<footer class="">
+
+</footer>
+{% endblock %}
