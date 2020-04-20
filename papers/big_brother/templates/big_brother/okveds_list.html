@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Запросы в обработке</title>
+{% endblock %}
+{% block content %}
+{% if req_id %}
+    <p>{{ req_id }} {{ decision }} {{ comment }} {{ user }}</p>
+{% endif %}
+    <a href="{% url 'bb_index' %}">Не обработанные</a>
+    <a href="{% url 'accepted' %}">Одобренные</a>
+    <a href="{% url 'declined' %}">Отклоненные</a>
+    <table border="1">
+        <caption>Список ОКВЕДов</caption>
+        <tr>
+            <th>№ ОКВЕД</th>
+            <th>Название</th>
+            <th>Описание</th>
+        </tr>
+    {% for okved in okveds_list %}
+        <tr>
+            <td><a href="{% url 'okved_card' okved_id=okved.id %}">{{ okved.okved_number }}</a></td>
+            <td><a href="{% url 'okved_card' okved_id=okved.id %}">{{ okved.okved_name }}</a></td>
+            <td><a href="{% url 'okved_card' okved_id=okved.id %}">{{ okved.okved_description }}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
