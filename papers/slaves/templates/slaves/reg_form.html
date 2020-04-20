@@ -1,7 +1,6 @@
 {% extends 'slaves/base_slave.html' %}
 {% block content %}
 {% if company.status == 'True' %}
-{{ company.status }}
     <section>
         <form method="post" action="{% url 'reg_confirmed' %}">
             {% csrf_token %}
