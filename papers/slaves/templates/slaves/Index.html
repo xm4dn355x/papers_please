@@ -3,18 +3,30 @@
 <title>Форма для получения спецпропуска для автомобиля</title>
 {% endblock %}
 {% block content %}
-<section>
-    <form method="get" action="{% url 'reg_form' %}">
-        <fieldset>
-            <legend>Проверить свою оргазацию в реестре</legend>
-            {% if alert %}
-            <h1>{{ alert }}</h1>
-            {% endif %}
-            <label>Поиск по ИНН</label><br>
-            <input class="input" name="inn" type="search" placeholder="Введите ИНН организации">
-            <button class="add-on icon-start" type="submit">Найти</button>
-            <!-- <a href="#more">Подробнее</a> -->
-        </fieldset>
-    </form>
+<section class="welcome_screen">
+            <p class="promo-text" style="width: 65%; margin: 0 auto;">В связи с распространением новой коронавирусной инфекции (COVID-19) Юридическим лицам
+                и ИП необходимо получить специальный пропуск для осуществления своей трудовой деятельности на территории
+                МО г.Салехард.<br><br>
+
+                Пропуск могут получить только те Юридические лица и ИП на которых распространяется:
+                Указ Президента Российской Федерации от <a href="http://publication.pravo.gov.ru/Document/Text/0001202004020025">
+                    02 апреля 2020 года № 239</a> "О мерах по обеспечению санитарно-эпидемиологического
+                благополучия населения на территории Российской Федерации", а так же Согласно постановлению
+                Правительства Ямало-Ненецкого автономного округа от 05 апреля 2020 года № 386-П утвержден перечень иных
+                организаций, на которые не распространяется Указ Президента Российской Федерации
+                <a href="https://www.yanao.ru/upload/uf/924/452_P-ot-17_04_2020.pdf">от 05 апреля 2020 года № 452-П</a>
+            </p><br>
+            <form method="get" action="{% url 'reg_form' %}">
+                <fieldset style="padding: 0 20px;">
+                    <legend>Проверить свою оргазацию в реестре</legend>
+                    {% if alert %}
+                    <h1 style="color: red;">{{ alert }}</h1>
+                    {% endif %}
+                    <label>Поиск по ИНН</label><br>
+                    <input class="input" name="inn" type="search" placeholder="Введите ИНН организации">
+                    <button class="add-on icon-start" type="submit">Найти</button>
+                    <!-- <a href="#more">Подробнее</a> -->
+                </fieldset>
+            </form>
 </section>
 {% endblock %}
