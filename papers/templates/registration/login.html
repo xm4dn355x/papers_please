@@ -1,41 +1,51 @@
 {% extends 'base.html' %}
 {% block title %}
-    <title>Вход для менеджеров</title>
+<title>Вход для менеджеров</title>
 {% endblock %}
 {% block content %}
 
 {% if form.errors %}
-  <p>Введено неверное имся пользователя или пароль. Повторите еще раз.</p>
+<p>Введено неверное имся пользователя или пароль. Повторите еще раз.</p>
 {% endif %}
 
 {% if next %}
-  {% if user.is_authenticated %}
-    <p>У вашего профиля нет прав доступа к данному разделу сайта.</p>
-  {% else %}
-    <p>Пожалуйста авторизуйтесь</p>
-  {% endif %}
+{% if user.is_authenticated %}
+<p>У вашего профиля нет прав доступа к данному разделу сайта.</p>
+{% else %}
+<p>Пожалуйста авторизуйтесь</p>
+{% endif %}
 {% endif %}
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
+<section style="margin: 30px auto; width: 350px; padding: 10px 10px;">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table style="margin: 0 auto;">
 
-<tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td >{{ form.username }}</td>
-</tr>
+            <tr style="height: 50px;">
+                <td style="padding-bottom: 7px;">{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
 
-<tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</tr>
-</table>
+            <tr>
+                <td style="padding-bottom: 7px;">{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding: 0 30px 0 30px">
+                    <input class="input" style="width: 100%;" type="submit" value="Вход"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding: 0 30px 0 30px; text-align: center;">
+                    {# Assumes you setup the password_reset view in your URLconf #}
+                    <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+                </td>
+            </tr>
+        </table>
 
-<input  type="submit" value="Вход" />
-<input class="input" type="hidden" name="Далее" value="{{ next }}" />
-</form>
+        <input class="input" type="hidden" name="Далее" value="{{ next }}"/>
+    </form>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+</section>
 
 {% endblock %}

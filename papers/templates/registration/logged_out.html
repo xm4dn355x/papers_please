@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}
-    <title>Вы вышли из аккаунта</title>
+<title>Вы вышли из аккаунта</title>
 {% endblock %}
 {% block content %}
-<p>Вы вышли из аккаунта!</p>
 
-<a href="{% url 'login'%}">Нажмите сюда, чтоб авторизоваться.</a>
+<section style="margin: 30px auto; width: 350px; padding: 10px 10px;">
+    <p style="text-align: center; margin: 0 0 10px 0;">Вы вышли из аккаунта!</p>
+
+    <p style="text-align: center;"><a href="{% url 'login'%}">Нажмите сюда, чтоб авторизоваться.</a></p>
+</section>
 {% endblock %}
