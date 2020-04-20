@@ -85,3 +85,33 @@ def req_card(request, req_id):
     template = loader.get_template('big_brother/req_card.html')
     context = {'req_id': req_id, 'car_request': car_request, 'car_pass': car_pass}
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def okveds_list(request):
+    if request.method == 'POST':
+        query = request.POST
+        okved_id = query.get('okved_id')
+        okved_name = query.get('okved_name')
+        okved_description = query.get('okved_description')
+        edited_okved = Okveds_list.objects.get(id=okved_id)
+        edited_okved.okved_name = okved_name
+        edited_okved.okved_description = okved_description
+        edited_okved.save()
+        okveds_list = Okveds_list.objects.all()
+        template = loader.get_template('big_brother/okveds_list.html')
+        context = {'okveds_list': okveds_list}
+        return HttpResponse(template.render(context, request))
+    if request.method == 'GET':
+        okveds_list = Okveds_list.objects.all()
+        template = loader.get_template('big_brother/okveds_list.html')
+        context = {'okveds_list': okveds_list}
+        return HttpResponse(template.render(context, request))
+
+
+@login_required
+def okved_card(request, okved_id):
+    okved = Okveds_list.objects.get(id=okved_id)
+    template = loader.get_template('big_brother/okved_card.html')
+    context = {'okved': okved,}
+    return HttpResponse(template.render(context, request))
