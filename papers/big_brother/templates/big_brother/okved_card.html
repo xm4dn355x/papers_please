@@ -11,15 +11,25 @@
                 {% csrf_token %}
                 <legend>Карточка ОКВЕДа</legend>
                 <br>
-                <label class="name_org">
+                <label class="number_okved">
                     <input name="okved_id" type="text" style="display:None;" value="{{ okved.id }}">
-                    {{ okved.okved_number }}
+                    <p><b>Код ОКВЭД: </b>{{ okved.okved_number }}</p>
                 </label><br><br>
-                <input name="okved_name" type="text" value="{{ okved.okved_name }}"><br><br>
-                {% if okved.description == 'None' %}
-                    <input name="okved_description" type="text" style="display:None;" value="{{ okved.okved_description }}">
+                <label>
+                    <p><b>Название ОКВЭД:</b><br>
+                        <textarea name="okved_name" placeholder="{{ okved.okved_name }}"></textarea></p>
+                </label>
+                {% if okved.okved_description == 'None' or okved.okved_description == None %}
+                <label>
+                        <textarea name="okved_description" style="display:None;"
+                                  placeholder="{{ okved.okved_description }}"></textarea><br>
+                </label>
                 {% else %}
-                    <input name="okved_description" type="text" value="{{ okved.okved_description }}"><br><br>
+                <label>
+                    <p><b>Описание ОКВЭД:</b><br>
+                        <textarea name="okved_description"
+                                  placeholder="{{ okved.okved_description }}"></textarea><br><br>
+                </label>
                 {% endif %}
                 <input class="add-on" type="submit" name="submit" value="Сохранить">
             </form>
