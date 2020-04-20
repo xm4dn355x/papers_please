@@ -1,78 +1,76 @@
 {% extends 'base.html' %}
 {% block title %}
-    <title>Карточка запроса</title>
+<title>Карточка запроса</title>
 {% endblock %}
 
 {% block content %}
-{{ req_id }}
-{{ car_request }}
-{{ request.user }}
-    <main>
-        <section class="request_card">
-            <fieldset>
-                <legend>Карточка запроса</legend><br>
-                    <label class="name_org">
-                        {{ car_request.company_id.org_name }}
-                    </label><br><br>
-                    <label class="gen_dir_name">
-                        {{ car_request.company_id.owner_name }}
-                    </label><br><br>
-                    <label class="number_okved">
-                        {{ car_request.company_id.okved_id.okved_number }}
-                    </label><br><br>
-                    <label class="okved_name">
-                        {{ car_request.company_id.okved_id.okved_name }}
-                    </label><br><br>
-                    <label class="okved_descriptions">
-                        {{ car_request.company_id.okved_id.okved_description }}
-                    </label><br><br>
-                    <label class="tel_number">
-                        {{ car_request.company_id.tel }}
-                    </label><br><br>
-                    <label class="email">
-                        {{ car_request.company_id.email }}
-                    </label><br><br>
-                    <label class="number_ptc">
-                        {{ car_request.car_id.pts_number }}
-                    </label><br><br>
-                    <label class="number_auto">
-                        {{ car_request.car_id.license_plate }}
-                    </label><br><br>
-                <label class="brand">
-                    {{ car_request.car_id.brand }}
-                </label>
-                <label class="model">
-                    {{ car_request.car_id.model }}
-                </label><br><br>
-                <label class="comment_org">
-                    {{ car_request.comment }}
-                </label><br><br>
-                {% if car_pass != 'DoesNotExist' %}
-                <label class="comment_org">
-                    {{ car_pass.moderator }}
-                </label><br><br>
-                <label class="comment_org">
-                    {{ car_pass.moderator_comment }}
-                </label><br><br>
-                {% else %}
-                <label class="comment_org">
-                    Пропуск на данный автомобиль ранее не выдавался
-                </label><br><br>
-                {% endif %}
-            </fieldset>
+<main>
+    <section class="request_card">
+        <fieldset>
+            <legend>Карточка запроса</legend>
+            <br>
+            <label class="name_org">
+                <b>{{ car_request.company_id.org_name }}</b>
+            </label><br>
+            <label class="gen_dir_name">
+                <b>{{ car_request.company_id.owner_name }}</b>
+            </label><br><br>
+            <label class="number_okved">
+                <p><b>Код ОКВЭД:</b> {{ car_request.company_id.okved_id.okved_number }}</p>
+            </label><br>
+            <label class="okved_name">
+                <p><b>Название ОКВЭД:</b> {{ car_request.company_id.okved_id.okved_name }}</p>
+            </label><br>
+            <label class="okved_descriptions">
+                <p><b>Описание ОКВЭД:</b> {{ car_request.company_id.okved_id.okved_description }}</p>
+            </label><br>
+            <label class="tel_number">
+                <p><b>Телефон:</b> {{ car_request.company_id.tel }}</p>
+            </label><br>
+            <label class="email">
+                <p><b>E-mail:</b> {{ car_request.company_id.email }}</p>
+            </label><br>
+            <label class="number_ptc">
+                <p><b>№ ПТС автомобиля:</b> {{ car_request.car_id.pts_number }}</p>
+            </label><br>
+            <label class="number_auto">
+                <p><b>Регистрационный номер авто:</b> {{ car_request.car_id.license_plate }}</p>
+            </label><br>
+            <label class="brand">
+                <p><b>Марка:</b> {{ car_request.car_id.brand }}</p>
+            </label>
+            <label class="model">
+                <p><b>Модель:</b> {{ car_request.car_id.model }}</p>
+            </label><br>
+            <label class="comment_org">
+                <p><b>Комментарий заявителя:</b> {{ car_request.comment }}</p>
+            </label><br><br>
+            {% if car_pass != 'DoesNotExist' %}
+            <label class="moderator">
+                <p><b>Кто обработал заявку:</b> {{ car_pass.moderator }}</p>
+            </label><br>
+            <label class="moderator-comment">
+                <p><b>Комментарий модератора:</b> {{ car_pass.moderator_comment }}</p>
+            </label><br>
+            {% else %}
+            <label class="moderator-not-exist">
+                <b>Пропуск на данный автомобиль ранее не выдавался</b>
+            </label><br>
+            {% endif %}
             <form method="post" action="{% url 'bb_index' %}" class="nav_request_card">
                 {% csrf_token %}
                 <input name="req_id" type="text" style="display:None;" value="{{ req_id }}">
                 <input name="user" type="text" style="display:None;" value="{{ request.user }}">
-                <input class="add-on" type="submit" name="decision" value="Одобрить">
-                <input class="add-on" type="submit" name="decision" value="Отклонить"><br><br>
-                <textarea name="comment" placeholder="Причина одобрения \ отказа"></textarea>
+                <textarea name="comment" placeholder="Причина одобрения \ отказа"></textarea><br><br>
+                <input class="add-on green" type="submit" name="decision" value="Одобрить">
+                <input class="add-on red" type="submit" name="decision" value="Отклонить">
             </form>
-        </section>
+        </fieldset>
+    </section>
 
-    </main>
+</main>
 
-    <footer class="">
+<footer class="">
 
-    </footer>
+</footer>
 {% endblock %}
