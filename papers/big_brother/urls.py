@@ -19,4 +19,5 @@ from . import views
 
 urlpatterns = [
     path('', views.bb_index, name='bb_index'),
+    path('req_card/?req_id=<int:req_id>', views.req_card, name='req_card')
 ]
