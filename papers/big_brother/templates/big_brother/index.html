@@ -4,9 +4,11 @@
 {% endblock %}
 {% block content %}
 {% if req_id %}
-<p>{{ req_id }} {{ decision }} {{ comment }} {{ user }}</p>
+    <p>{{ req_id }} {{ decision }} {{ comment }} {{ user }}</p>
 {% endif %}
-    <p> Все запросы </p>
+    <a href="{% url 'bb_index' %}">Не обработанные</a>
+    <a href="{% url 'accepted' %}">Одобренные</a>
+    <a href="{% url 'declined' %}">Отклоненные</a>
     <table border="1">
         <caption>Список необработанных запросов</caption>
         <tr>
