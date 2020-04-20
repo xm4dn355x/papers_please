@@ -76,6 +76,7 @@ padding: 0 20px 0 0;
     .hot-line a {font-size: 12px;}
     .hot-line p {font-size: 8px;
                  width: 122px;   }
+    .add-on {margin-bottom: 10px;}
 }
 
 .login img {
@@ -113,6 +114,7 @@ padding: 0 20px 0 0;
 fieldset {
   margin: 30px auto;
   width: 60%;
+    padding: 10px 10px;
   /*outline: 2px dashed rgba(0, 128, 0, 0.2);
   outline-offset: 5px;*/
 }
@@ -191,4 +193,7 @@ footer {
 textarea {
     width: 250px;
     height: 100px;
+    border: 2px solid #cccccc;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
 }
