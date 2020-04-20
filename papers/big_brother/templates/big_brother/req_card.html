@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Карточка запроса</title>
+{% endblock %}
+
+{% block content %}
+{{ req_id }}
+{{ car_request }}
+{{ request.user }}
+    <main>
+        <section class="request_card">
+            <fieldset>
+                <legend>Карточка запроса</legend><br>
+                    <label class="name_org">
+                        {{ car_request.company_id.org_name }}
+                    </label><br><br>
+                    <label class="gen_dir_name">
+                        {{ car_request.company_id.owner_name }}
+                    </label><br><br>
+                    <label class="number_okved">
+                        {{ car_request.company_id.okved_id.okved_number }}
+                    </label><br><br>
+                    <label class="okved_name">
+                        {{ car_request.company_id.okved_id.okved_name }}
+                    </label><br><br>
+                    <label class="okved_descriptions">
+                        {{ car_request.company_id.okved_id.okved_description }}
+                    </label><br><br>
+                    <label class="tel_number">
+                        {{ car_request.company_id.tel }}
+                    </label><br><br>
+                    <label class="email">
+                        {{ car_request.company_id.email }}
+                    </label><br><br>
+                    <label class="number_ptc">
+                        {{ car_request.car_id.pts_number }}
+                    </label><br><br>
+                    <label class="number_auto">
+                        {{ car_request.car_id.license_plate }}
+                    </label><br><br>
+                <label class="brand">
+                    {{ car_request.car_id.brand }}
+                </label>
+                <label class="model">
+                    {{ car_request.car_id.model }}
+                </label><br><br>
+                <label class="comment_org">
+                    {{ car_request.comment }}
+                </label><br><br>
+            </fieldset>
+            <form method="post" action="{% url 'bb_index' %}" class="nav_request_card">
+                {% csrf_token %}
+                <input name="req_id" type="text" style="display:None;" value="{{ req_id }}">
+                <input name="user" type="text" style="display:None;" value="{{ request.user }}">
+                <input class="add-on" type="submit" name="decision" value="Одобрить">
+                <input class="add-on" type="submit" name="decision" value="Отклонить"><br><br>
+                <textarea name="comment" placeholder="Причина одобрения \ отказа"></textarea>
+            </form>
+        </section>
+
+    </main>
+
+    <footer class="">
+
+    </footer>
+{% endblock %}
