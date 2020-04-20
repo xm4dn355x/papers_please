@@ -47,6 +47,18 @@
                 <label class="comment_org">
                     {{ car_request.comment }}
                 </label><br><br>
+                {% if car_pass != 'DoesNotExist' %}
+                <label class="comment_org">
+                    {{ car_pass.moderator }}
+                </label><br><br>
+                <label class="comment_org">
+                    {{ car_pass.moderator_comment }}
+                </label><br><br>
+                {% else %}
+                <label class="comment_org">
+                    Пропуск на данный автомобиль ранее не выдавался
+                </label><br><br>
+                {% endif %}
             </fieldset>
             <form method="post" action="{% url 'bb_index' %}" class="nav_request_card">
                 {% csrf_token %}
