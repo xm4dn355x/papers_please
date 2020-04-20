@@ -6,7 +6,6 @@ from big_brother.models import Okveds_list, Okveds_allowed, Companies, Cars, Car
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_protect
-from django.template.context_processors import csrf
 from papers.configs import DADATA_API_KEY
 import json
 import requests
