@@ -1,34 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}
-    <title>Запросы в обработке</title>
+<title>Запросы в обработке</title>
 {% endblock %}
 {% block content %}
-{% if req_id %}
-    <p>{{ req_id }} {{ decision }} {{ comment }} {{ user }}</p>
-{% endif %}
-    <a href="{% url 'bb_index' %}">Не обработанные</a>
-    <a href="{% url 'accepted' %}">Одобренные</a>
-    <a href="{% url 'declined' %}">Отклоненные</a><br>
-    <a href="{% url 'okveds_list' %}">Список ОКВЭДов</a>
-    <table border="1">
-        <caption>Список необработанных запросов</caption>
-        <tr>
-            <th>Имя организации</th>
-            <th>Автомобиль</th>
-            <th>Госномер</th>
-            <th>ОКВЕД</th>
-            <th>Описание ОКВЕДа</th>
-            <th>Комментарий</th>
-        </tr>
+<section class="nav-mngmt">
+    <ul>
+        <li><a href="{% url 'bb_index' %}">Не обработанные</a></li>
+        <li><a href="{% url 'accepted' %}">Одобренные</a></li>
+        <li><a href="{% url 'declined' %}">Отклоненные</a></li>
+    </ul>
+    <ul>
+        <li><a href="{% url 'okveds_list' %}">Список ОКВЭДов</a></li>
+    </ul>
+</section>
+<section class="requests-list">
+    <table>
+    <caption>Список необработанных запросов</caption>
+    <tr class="requests-list-header">
+        <th>Имя организации</th>
+        <th>Автомобиль</th>
+        <th>Госномер</th>
+        <th>ОКВЕД</th>
+        <th>Описание ОКВЕДа</th>
+        <th>Комментарий</th>
+    </tr>
     {% for car in car_requests %}
-        <tr>
-            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.company_id }}</a></td>
-            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.brand }} {{ car.car_id.model }}</a></td>
-            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.license_plate }}</a></td>
-            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.company_id.okved_id.okved_number }}</a></td>
-            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.company_id.okved_id.okved_name }}</a></td>
-            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.comment }}</a></td>
-        </tr>
+    <tr class="requests-list-rows">
+        <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.company_id }}</a></td>
+        <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.brand }} {{ car.car_id.model }}</a></td>
+        <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.license_plate }}</a></td>
+        <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.company_id.okved_id.okved_number }}</a></td>
+        <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.company_id.okved_id.okved_name }}</a></td>
+        <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.comment }}</a></td>
+    </tr>
     {% endfor %}
-    </table>
+</table>
+</section>
 {% endblock %}
