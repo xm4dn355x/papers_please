@@ -3,12 +3,57 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
 from django.template import loader
+from .models import *
 
 
 @login_required
+@csrf_protect
 def bb_index(request):
-    template = loader.get_template('big_brother/index.html')
-    context = {}
+    # TODO: Прописать логику обработки POST Запроса
+    if request.method == 'POST':
+        query = request.POST
+        user = query.get('user')
+        req_id = query.get('req_id')
+        decision = query.get('decision')
+        comment = query.get('comment')
+        if decision == 'Одобрить':
+            status = 'Пропуск действителен'
+        elif decision == 'Отклонить':
+            status = 'Пропуск НЕдействителен'
+        else:
+            status = 'СТАТУС ПРОПУСКА НЕОПРЕДЕЛЕН'
+        processed_car_request = Car_requests.objects.get(id=req_id)
+        processed_car_request.status = decision
+        car_pass = Car_passes.objects.create(
+            company_id=processed_car_request.company_id,
+            car_id=processed_car_request.car_id,
+            req_id=processed_car_request,
+            moderator=user,
+            #pass_time= ,# TODO: Добавить срок действия пропуска
+            status=status
+        )
+        processed_car_request.save()
+        car_pass.save()
+        car_requests = Car_requests.objects.filter(status='В ожидании проверки')
+        template = loader.get_template('big_brother/index.html')
+        context = {'car_requests': car_requests,
+                   'user': user,
+                   'req_id': req_id,
+                   'decision': decision,
+                   'comment': comment, }
+        return HttpResponse(template.render(context, request))
+    if request.method == 'GET':
+        car_requests = Car_requests.objects.filter(status='В ожидании проверки')
+        template = loader.get_template('big_brother/index.html')
+        context = {'car_requests': car_requests,}
+        return HttpResponse(template.render(context, request))
+
+@login_required
+def req_card(request, req_id):
+    car_request = Car_requests.objects.get(id=req_id)
+    template = loader.get_template('big_brother/req_card.html')
+    context = {'req_id': req_id, 'car_request': car_request,}
     return HttpResponse(template.render(context, request))
