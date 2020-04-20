@@ -5,14 +5,20 @@
 {% block content %}
 
 {% if form.errors %}
-<p>Введено неверное имся пользователя или пароль. Повторите еще раз.</p>
+<section class="login-alert">
+    <p>Введено неверное имя пользователя или пароль. Повторите еще раз.</p>
+</section>
 {% endif %}
 
 {% if next %}
 {% if user.is_authenticated %}
-<p>У вашего профиля нет прав доступа к данному разделу сайта.</p>
+<section class="login-alert">
+    <p>У вашего профиля нет прав доступа к данному разделу сайта.</p>
+</section>
 {% else %}
-<p>Пожалуйста авторизуйтесь</p>
+<section class="login-alert">
+    <p>Пожалуйста авторизуйтесь</p>
+</section>
 {% endif %}
 {% endif %}
 
