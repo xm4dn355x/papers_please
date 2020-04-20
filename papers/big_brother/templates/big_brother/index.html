@@ -8,7 +8,8 @@
 {% endif %}
     <a href="{% url 'bb_index' %}">Не обработанные</a>
     <a href="{% url 'accepted' %}">Одобренные</a>
-    <a href="{% url 'declined' %}">Отклоненные</a>
+    <a href="{% url 'declined' %}">Отклоненные</a><br>
+    <a href="{% url 'okveds_list' %}">Список ОКВЭДов</a>
     <table border="1">
         <caption>Список необработанных запросов</caption>
         <tr>
