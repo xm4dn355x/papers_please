@@ -9,33 +9,22 @@
 </head>
 <body>
     <header class="main-header">
-        <nav class="main-nav">
-            <a href="{% url 'index' %}" class="logo"><img src="/static/img/gerb_shd.png"  alt="Герб города Салехард">
-                <p>Муниципальное Образование<br>город Салехард</p>
-            </a>
-
-            <div class="hot-line">
-                <p >Телефон горячей линии</p>
-                <a href="tel:+79000000000">+7 900 000 00 00</a>
-            </div>
-
-        </nav>
+        <a class="logo" src="{% url 'index' %}" class="logo" alt="Главная страница">
+            <img src="/static/img/gerb_shd.png" alt="Герб города Салехард"></a>
+        <a href="{% url 'index' %}">Администрация города Салехард</a>
+        <div class="hot-line">
+            <p>Телефон горячей линии</p>
+            <a href="tel:+79220908877">+7 922 080 88 77</a>
+        </div>
+        <!--<a href="login.html"><img class="login" src="img/enter.svg" alt="Войти в аккаунт"></a> -->
     </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-    <footer>
-        <ul class="social-list">
-            <li class="social-list-item">
-                <a href="https://vk.com/salekhard_adm">ВКонтакте</a>
-            </li>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<footer class="">
 
-            <li class="social-list-item">
-                <a href="https://www.instagram.com/salekhard.adm">Instagram</a>
-            </li>
-      </ul>
-    </footer>
+</footer>
 
 </body>
 </html>
