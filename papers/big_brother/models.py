@@ -80,6 +80,7 @@ class Car_passes(models.Model):
     company_id = models.ForeignKey('Companies', null=True, on_delete=models.SET)
     car_id = models.ForeignKey('Cars', null=True, on_delete=models.SET)
     req_id = models.ForeignKey('Car_requests', null=True, on_delete=models.SET)
+    moderator = models.CharField(unique=False, max_length=128, null=False, default='Модератор не указан')
     pass_time = models.DateField(unique=False, null=False, default=now)
     status = models.CharField(unique=False, max_length=64, default='Пропуск действителен')
 
