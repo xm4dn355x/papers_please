@@ -21,23 +21,51 @@ main {
 
 }
 .main-header {
-    min-height: auto;
-    color: #fff;
-    background-color: #2d2d44;
+    padding: 0 20px 0 20px;
+    background-color: #2E2C44;
+    color: #f8f8f8;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: 43px  auto auto 20px;
+    grid-template-rows: auto;
+    gap: 10px;
+    align-items: center;
 }
 
+.main-header a {
+    color: #f8f8f8;
+    text-decoration: none;
+}
+
+.main-header P {
+    text-align: left;
+}
+
+.main-header div {
+    justify-self: end;
+}
+
+.main-header :last-child {
+    justify-self: end;
+}
+.logo img {
+    width: 43px;
+    height: 63px;
+}
+
+.hot-line{
+padding: 0 20px 0 0;
+}
+
+.hot-line a {
+    color: red;
+    font-size: 24px;
+}
 .main-nav {
     padding: 10px 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between
-}
-
-.hot-line{
-    align-self: center;
-    text-align: center;
-    margin-right: 80px;
-    font-size: 14.5px;
 }
 
 .hot-line p {
@@ -58,14 +86,6 @@ main {
 .logo p {
     margin: 5px auto;
 }
-
-.logo img {
-    display: block;
-    width: 43px;
-    height: 63px;
-    margin: 0 10px;
-}
-
 
 fieldset {
   margin: 30px auto;
@@ -136,4 +156,16 @@ footer {
     color: #f8f8f8;
     text-decoration: none;
     list-style: none;
+}
+
+.request_card {
+    width: 70%;
+    margin: 30px auto;
+}
+.nav_request_card {
+    margin: 20px auto;
+}
+textarea {
+    width: 250px;
+    height: 100px;
 }
