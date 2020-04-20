@@ -1,5 +1,31 @@
 {% extends 'base.html' %}
-
+{% block title %}
+    <title>Запросы в обработке</title>
+{% endblock %}
 {% block content %}
-<p> Ты пидор </p>
+{% if req_id %}
+<p>{{ req_id }} {{ decision }} {{ comment }} {{ user }}</p>
+{% endif %}
+    <p> Все запросы </p>
+    <table border="1">
+        <caption>Список необработанных запросов</caption>
+        <tr>
+            <th>Имя организации</th>
+            <th>Автомобиль</th>
+            <th>Госномер</th>
+            <th>ОКВЕД</th>
+            <th>Описание ОКВЕДа</th>
+            <th>Комментарий</th>
+        </tr>
+    {% for car in car_requests %}
+        <tr>
+            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.company_id }}</a></td>
+            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.brand }} {{ car.car_id.model }}</a></td>
+            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.license_plate }}</a></td>
+            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.company_id.okved_id.okved_number }}</a></td>
+            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.car_id.company_id.okved_id.okved_name }}</a></td>
+            <td><a href="{% url 'req_card' req_id=car.id %}">{{ car.comment }}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
 {% endblock %}
