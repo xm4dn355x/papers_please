@@ -12,7 +12,7 @@ from .models import *
 @login_required
 @csrf_protect
 def bb_index(request):
-    if request.method == 'POST': # TODO: При изменении пропуска сначала ищется существуюший пропуск, а потом изменяется
+    if request.method == 'POST':
         query = request.POST
         user = query.get('user')
         req_id = query.get('req_id')
