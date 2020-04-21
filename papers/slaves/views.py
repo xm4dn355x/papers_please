@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from big_brother.models import Okveds_list, Okveds_allowed, Companies, Cars, Car_requests, Car_passes
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_protect
@@ -25,6 +26,9 @@ def reg_form(request):
     if request.method == 'GET':
         query = request.GET
         inputed_inn = query.get('inn')
+        # sbj = 'Тестовая тема письма'
+        # msg = f'Тестовый текст письма {inputed_inn}'
+        # send_mail(subject=sbj, message=msg, from_email='madmike31031993@gmail.com', recipient_list=['danver.cc.13@gmail.com',], fail_silently=False)
         if inputed_inn == '' or not inputed_inn.isdigit():
             template = loader.get_template('slaves/index.html')
             context = {'alert': 'Неправильный ИНН!'}
@@ -65,14 +69,14 @@ def reg_form(request):
 
 
 @csrf_protect
-def reg_confirmed(request):
+def reg_confirmed(request): # TODO: После отправки формы на почту приходит письмо, мол ваша заявка в обработке
     if request.method == 'POST':
         query = request.POST
         inn = query.get('inn')
         tel = query.get('tel')
         email = query.get('email')
         pts_number = query.get('pts_number')
-        license_plate_number = query.get('license_plate_number')
+        license_plate_number = str(query.get('license_plate_number')).upper()
         license_plate_region = query.get('license_plate_region')
         license_plate = str(license_plate_number) + str(license_plate_region)
         brand = query.get('brand')
