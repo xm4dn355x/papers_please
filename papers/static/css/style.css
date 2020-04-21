@@ -376,3 +376,14 @@ li {
     font-size: 30px;
     margin-bottom: 35px;
 }
+
+.pass_error {
+    width: 90%;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.pass_error p {
+    font-size: 30px;
+    margin-bottom: 35px;
+}
