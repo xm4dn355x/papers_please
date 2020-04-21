@@ -7,11 +7,15 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
 from django.template import loader
 from .models import *
+import qrcode
+
+# CONSTANTS
+BASE_URL = 'http://212.220.15.188:8000/'
 
 
 @login_required
 @csrf_protect
-def bb_index(request):
+def bb_index(request): # TODO: После одобрения, либо отклонения отправляется письмо на почту о результате.
     if request.method == 'POST':
         query = request.POST
         user = query.get('user')
@@ -21,7 +25,7 @@ def bb_index(request):
         if decision == 'Одобрить':
             status = 'Пропуск действителен'
         elif decision == 'Отклонить':
-            status = 'Пропуск НЕдействителен'
+            status = 'Пропуск НЕ действителен'
         else:
             status = 'СТАТУС ПРОПУСКА НЕОПРЕДЕЛЕН'
         processed_car_request = Car_requests.objects.get(id=req_id)
@@ -98,12 +102,12 @@ def okveds_list(request):
         edited_okved.okved_name = okved_name
         edited_okved.okved_description = okved_description
         edited_okved.save()
-        okveds_list = Okveds_list.objects.all()
+        okveds_list = Okveds_list.objects.all().order_by('okved_number')
         template = loader.get_template('big_brother/okveds_list.html')
         context = {'okveds_list': okveds_list}
         return HttpResponse(template.render(context, request))
     if request.method == 'GET':
-        okveds_list = Okveds_list.objects.all()
+        okveds_list = Okveds_list.objects.all().order_by('okved_number')
         template = loader.get_template('big_brother/okveds_list.html')
         context = {'okveds_list': okveds_list}
         return HttpResponse(template.render(context, request))
@@ -115,3 +119,8 @@ def okved_card(request, okved_id):
     template = loader.get_template('big_brother/okved_card.html')
     context = {'okved': okved,}
     return HttpResponse(template.render(context, request))
+
+
+def qr_gen(base_url, pass_id):
+    url = f'{base_url}/?pass_id={pass_id}'
+    return qrcode.make(url, box_size=8, border=1)
