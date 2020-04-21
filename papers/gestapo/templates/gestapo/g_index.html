@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Спецпропуск для автомобиля</title>
+{% endblock %}
+{% block content %}
+{% if car_pass == 'error' %}
+<section class="pass_page">
+    <p>Пропуск не найден!</b></p>
+</section>
+{% else %}
+<section class="pass_page">
+    <p>ID: <b>{{ car_pass.id }}</b></p>
+    <p><b>{{ car_pass.company_id }}</b></p>
+    <p><b>{{ car_pass.car_id.brand }} {{ car_pass.car_id.model }}</b></p>
+    <p><b>{{ car_pass.car_id.license_plate }}</b></p>
+    <p>Статус пропуска:<br> <b>{{ car_pass.status }}</b></p>
+</section>
+{% endif %}
+{% endblock %}
