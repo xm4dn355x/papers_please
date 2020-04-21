@@ -24,7 +24,7 @@ def search_id(request):
 def search_lp(request):
     if request.method == 'GET':
         query = request.GET
-        lp = query.get('lp')
+        lp = str(query.get('lp')).upper().replace(' ', '').replace('RUS', '').strip()
         try:
             car = Cars.objects.get(license_plate=lp)
             car_pass = Car_passes.objects.get(car_id=car.id)
