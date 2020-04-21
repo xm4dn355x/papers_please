@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('slaves.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('management/', include('big_brother.urls')),
-    path('fronttesting/', include('fronttesting.urls'))
+    path('fronttesting/', include('fronttesting.urls')),
+    path('pass/', include('gestapo.urls'))
 ]
