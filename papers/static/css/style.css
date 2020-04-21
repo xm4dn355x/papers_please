@@ -125,6 +125,7 @@ main {
 .welcome_screen p {
     grid-column: 1 / 4;
     justify-self: center;
+    text-align: justify;
 }
 
 .logo {
@@ -363,4 +364,15 @@ li {
     background: darkred;
     color: white;
     width: 100px;
+}
+
+.pass_page {
+    width: 90%;
+    margin: 15px auto;
+    padding-left: 10px;
+}
+
+.pass_page p {
+    font-size: 30px;
+    margin-bottom: 35px;
 }
