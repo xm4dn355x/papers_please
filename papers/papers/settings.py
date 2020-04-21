@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from papers.configs import DJANGO_SECRET_KEY, DJANGO_DATABASES
+from papers.configs import DJANGO_SECRET_KEY, DJANGO_DATABASES, DJANGO_EMAIL_HOST, DJANGO_EMAIL_HOST_USER, DJANGO_EMAIL_HOST_PASSWORD, DJANGO_EMAIL_PORT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -127,3 +127,9 @@ STATICFILES_DIRS = [
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/management'
+
+EMAIL_HOST = DJANGO_EMAIL_HOST
+EMAIL_HOST_USER = DJANGO_EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = DJANGO_EMAIL_HOST_PASSWORD
+EMAIL_PORT = DJANGO_EMAIL_PORT
+EMAIL_USE_TLS = True
