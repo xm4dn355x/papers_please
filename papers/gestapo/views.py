@@ -11,7 +11,12 @@ from django.views.decorators.csrf import csrf_protect
 def search_id(request):
     if request.method == 'GET':
         query = request.GET
-        pass_id = query.get('pass_id')
+        try:
+            pass_id = int(query.get('pass_id'))
+        except ValueError:
+            template = loader.get_template('slaves/index.html')
+            context = {}
+            return HttpResponse(template.render(context, request))
         try:
             car_pass = Car_passes.objects.get(id=pass_id)
         except Car_passes.DoesNotExist:
