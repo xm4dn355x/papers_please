@@ -13,7 +13,13 @@
     <p><b>{{ car_pass.company_id }}</b></p>
     <p><b>{{ car_pass.car_id.brand }} {{ car_pass.car_id.model }}</b></p>
     <p><b>{{ car_pass.car_id.license_plate }}</b></p>
+    {% if car_pass.status == 'Пропуск НЕ действителен' %}
+    <p>Статус пропуска:<br> <b style="color: red;">{{ car_pass.status }}</b></p>
+    {% elif car_pass.status == 'Пропуск действителен' %}
+    <p>Статус пропуска:<br> <b style="color: green;">{{ car_pass.status }}</b></p>
+    {% else %}
     <p>Статус пропуска:<br> <b>{{ car_pass.status }}</b></p>
+    {% endif %}
 </section>
 {% endif %}
 {% endblock %}
