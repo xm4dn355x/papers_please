@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+        @page {
+            size: A5;
+            margin: 1cm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Roboto;
+            border: 1px solid black;
+            width: 480px;
+            height: 715px;
+        }
+
+        .border {
+            border: 2px solid #000000;
+            width: 373px;
+            height: 600px;
+            margin: 15px 47px 103px 51px;
+            box-shadow: 1px 12px 12px -6px rgba(0, 0, 0, 0.25);
+        }
+
+        .id {
+            position: absolute;
+            background-color: #6323B8;
+            width: 465px;
+            height: 108px;
+            margin: 5px 5px 464px -46px;
+            padding-bottom: 10px;
+        }
+
+        .id h1 {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 96px;
+            line-height: 112px;
+            color: #FFFFFF;
+            text-align: center;
+
+        }
+
+        ul {
+            margin-top: 140px;
+            text-align: center;
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 20px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 23px;
+            color: #000000;
+        }
+
+        .qr-img {
+            position: absolute;
+            top: 340px;
+            left: 115px;
+            width: 250px;
+            height: 250px;
+            margin: 5px auto;
+        }
+
+        .info {
+            margin: -94px auto;
+        }
+
+        img {
+            top: 619px;
+            position: absolute;
+            left: 15px;
+        }
+
+        .info ul {
+            margin: 0 20px 0 90px;
+            text-align: left;
+        }
+
+        .info li {
+            font-weight: normal;
+            font-size: 8px;
+            line-height: 9px;
+            margin-bottom: 10px;
+        }
+
+        .info li:last-child {
+            color: red;
+            font-weight: bold;
+        }
+
+    </style>
+    <title>Шаблон пропуска</title>
+</head>
+<body>
+<div class="border">
+    <div class="id">
+        <h1>ID {{ pass_id }}</h1>
+    </div>
+    <ul>
+        <li>{{ company_name }}</li>
+        <li>{{ brand }} {{ model }}</li>
+        <li>{{ license_plate }}</li>
+    </ul>
+    <img class="qr-img" src="{{ qr }}">
+
+</div>
+<img src=" data:image/png;base64,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" alt="">
+<div class="info">
+
+    <ul>
+        <li>Заполненный пропуск необходимо распечатать на принтере и разместитьпод лобовым стеклом транспортного
+            средства для прохождения муниципальных контрольных пунктов на въездах в город Салехард.
+        </li>
+        <li>По вопросам транспортного сообщения в границах МО город Салехард, а также получения спецпропуска</li>
+        <li>Вы можете обращаться по телефону «горячей линии» +7 922 090 88 77</li>
+    </ul>
+
+</div>
+
+</body>
+</html>
