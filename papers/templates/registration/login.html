@@ -41,12 +41,12 @@
                     <input class="input" style="width: 100%;" type="submit" value="Вход"/>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2" style="padding: 0 30px 0 30px; text-align: center;">
-                    {# Assumes you setup the password_reset view in your URLconf #}
-                    <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
-                </td>
-            </tr>
+<!--            <tr>-->
+<!--                <td colspan="2" style="padding: 0 30px 0 30px; text-align: center;">-->
+<!--                    {# Assumes you setup the password_reset view in your URLconf #}-->
+<!--                    <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>-->
+<!--                </td>-->
+<!--            </tr>-->
         </table>
 
         <input class="input" type="hidden" name="Далее" value="{{ next }}"/>
