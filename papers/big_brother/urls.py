@@ -24,4 +24,5 @@ urlpatterns = [
     path('declined/', views.declined, name='declined'),
     path('okveds_list', views.okveds_list, name='okveds_list'),
     path('okved_card/?okved_id=<int:okved_id>', views.okved_card, name='okved_card'),
+    path('pass_testing', views.pass_testing, name='pass_testing')
 ]
