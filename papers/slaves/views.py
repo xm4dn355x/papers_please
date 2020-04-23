@@ -28,7 +28,7 @@ def reg_form(request):
         inputed_inn = query.get('inn')
         # sbj = 'Тестовая тема письма'
         # msg = f'Тестовый текст письма {inputed_inn}'
-        # send_mail(subject=sbj, message=msg, from_email='madmike31031993@gmail.com', recipient_list=['danver.cc.13@gmail.com',], fail_silently=False)
+        # send_mail(subject=sbj, message=msg, from_email='itu@salekhard.org', recipient_list=['danver.cc.13@gmail.com',], fail_silently=False)
         if inputed_inn == '' or not inputed_inn.isdigit():
             template = loader.get_template('slaves/index.html')
             context = {'alert': 'Неправильный ИНН!'}
@@ -49,10 +49,10 @@ def reg_form(request):
                                                               okved_name='ДАННЫЕ ОТСУТСТВУЮТ! НЕОБХОДИМО ЗАПОЛНИТЬ!',
                                                               okved_description='ОПИСАНИЕ ОТСУТСТВУЕТ!')
             company = Companies.objects.create(inn=inputed_inn,
-                                                    org_name=parsed_data['org_name'],
-                                                    owner_name=parsed_data['owner_name'],
-                                                    okved_id=founded_okved_id,
-                                                    status=str(parsed_data['status']))
+                                               org_name=parsed_data['org_name'],
+                                               owner_name=parsed_data['owner_name'],
+                                               okved_id=founded_okved_id,
+                                               status=str(parsed_data['status']))
             company.save()
         template = loader.get_template('slaves/reg_form.html')
         context = {
@@ -83,6 +83,8 @@ def reg_confirmed(request): # TODO: После отправки формы на 
         model = query.get('model')
         comment = query.get('comment')
         company = Companies.objects.get(inn=inn)
+        company.tel = tel
+        company.email = email
         try:
             car = Cars.objects.get(license_plate=license_plate)
         except Cars.DoesNotExist:
@@ -99,6 +101,9 @@ def reg_confirmed(request): # TODO: После отправки формы на 
                                                       car_id=car,
                                                       status='В ожидании проверки',
                                                       comment=comment)
+        company.save()
+        car.save()
+        car_request.save()
         template = loader.get_template('slaves/reg_confirmed.html')
         context = {
             'debug_data': '',
