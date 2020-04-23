@@ -2,15 +2,22 @@ from django.shortcuts import render
 
 # Create your views here.
 
+from .models import *
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
 from django.template import loader
-from .models import *
+from io import BytesIO, StringIO
+from papers.configs import DJANGO_EMAIL_HOST_USER
+import base64
 import qrcode
+from xhtml2pdf import pisa
+from weasyprint import HTML, CSS
+
 
 # CONSTANTS
-BASE_URL = 'http://212.220.15.188:8000/'
+BASE_URL = 'http://212.220.15.188:8000/pass/'
 
 
 @login_required
@@ -34,6 +41,8 @@ def bb_index(request): # TODO: После одобрения, либо откл�
             car_pass = Car_passes.objects.get(car_id=processed_car_request.car_id)
             car_pass.status = status
             car_pass.moderator_comment = comment
+            send_pass_to_mail(car_pass, request, 'Cтатус Вашегшо пропуска изменился',
+                              f'Текущий статус Вашего пропуска: {status}')
         except Car_passes.DoesNotExist:
             car_pass = Car_passes.objects.create(
                 company_id=processed_car_request.company_id,
@@ -44,6 +53,11 @@ def bb_index(request): # TODO: После одобрения, либо откл�
                 #pass_time= ,# TODO: Добавить срок действия пропуска
                 status=status,
             )
+            # send_pass_to_mail(car_pass, request, f'Вам выдан пропуск со статусом: {status}',
+            #                   f'Направляем Вам пропуск для Вашего автомобиля в прикрепленном PDF документе\n'
+            #                   f'Текущий статус Вашего пропуска: {status}\n\n'
+            #                   f'Для удобства использования пропуска распечатайте прикрепленный документ, '
+            #                   f'а так же вы можете предъявлять его с экрана Вашего мобильного телефона.')
         processed_car_request.save()
         car_pass.save()
         car_requests = Car_requests.objects.filter(status='В ожидании проверки')
@@ -121,6 +135,77 @@ def okved_card(request, okved_id):
     return HttpResponse(template.render(context, request))
 
 
+def send_pass_to_mail(car_pass, request, message_subject, message_body):
+    print('send_pass_to_email begin')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    pdf = pdf_gen(car_pass, request)
+    print(f'pdf in send_pass_to_email:\n{pdf}')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    email_message = EmailMessage(
+        subject=message_subject,
+        body=message_body,
+        from_email=DJANGO_EMAIL_HOST_USER,
+        to=(car_pass.company_id.email,),
+        attachments=[(f'Пропуск {car_pass.car_id.license_plate}.pdf', pdf, 'application/pdf')]
+    )
+    print(f'email_message object {email_message}')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    email_message.send(fail_silently=False)
+    print('email message sended')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    print('send_pass_to_email end')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
+
+
+def pdf_gen(car_pass, request):
+    print('pdf_gen begin')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    template = loader.get_template('big_brother/pdf.html')
+    context = {'pass_id': car_pass.id,
+               'company_name': car_pass.company_id.org_name,
+               'brand': car_pass.car_id.brand,
+               'model': car_pass.car_id.model,
+               'license_plate': car_pass.car_id.license_plate,
+               'qr': qr_gen(BASE_URL, car_pass.id)}
+    html = template.render(context, request)
+    pdf = HTML(string=html).write_pdf()
+    print(f'pdf object:\n{pdf}')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    # pdf = base64.b64encode(pdf).replace("b'", "").replace("'", "")
+    # print(f'pdf base_64: {pdf}')
+    # print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    print('pdf_gen end')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    return pdf
+
+
+
 def qr_gen(base_url, pass_id):
-    url = f'{base_url}/?pass_id={pass_id}'
-    return qrcode.make(url, box_size=8, border=1)
+    url = f'{base_url}?pass_id={pass_id}'
+    qr = qrcode.make(url, box_size=10, border=0)
+    buffer = BytesIO()
+    qr.save(buffer, format='PNG')
+    buffer_img = buffer.getvalue()
+    res = f"""data:image/jpeg;base64,{str(base64.b64encode(buffer_img)).replace("b'", "").replace("'", "")}"""
+    return res
+
+
+def pass_testing(request):
+    template = loader.get_template('big_brother/pdf.html')
+    pass_id = 8
+    try:
+        car_pass = Car_passes.objects.get(id=pass_id)
+    except Car_passes.DoesNotExist:
+        car_pass = 'error'
+    context = {'pass_id': car_pass.id,
+               'company_name': car_pass.company_id.org_name,
+               'brand': car_pass.car_id.brand,
+               'model': car_pass.car_id.model,
+               'license_plate': car_pass.car_id.license_plate,
+               'qr': qr_gen(BASE_URL, 8)}
+    html = template.render(context, request)
+    pdf = HTML(string=html).write_pdf()
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="home_page.pdf"'
+    return response
