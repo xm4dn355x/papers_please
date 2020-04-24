@@ -18,10 +18,11 @@
                 <label class="number_okved">
                     {% if create == True %}
                     <p><b>Код ОКВЭД: </b><br>
-                        <textarea name="okved_id" type="text" placeholder="Введите номер кода ОКВЭД"></textarea>
+                        <textarea name="okved_number" type="text" placeholder="Введите номер кода ОКВЭД"></textarea>
                     </p>
                     {% else %}
                     <input name="okved_id" type="text" style="display:None;" value="{{ okved.id }}">
+                    <input name="okved_number" style="display:None;" type="text" value="{{ okved.okved_number }}">
                     <p><b>Код ОКВЭД: </b>{{ okved.okved_number }}</p>
                     {% endif %}
                 </label><br><br>
@@ -43,6 +44,10 @@
                 {% endif %}
                 </label>
                 <input class="add-on" type="submit" name="submit" value="Сохранить">
+                {% if create == True %}
+                {% else %}
+                <input class="add-on red_okved" name="delete" type="submit" name="submit" value="Удалить ОКВЭД">
+                {% endif %}
             </form>
         </fieldset>
     </section>
