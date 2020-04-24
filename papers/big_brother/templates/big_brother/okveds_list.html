@@ -11,14 +11,13 @@
         <li><a href="{% url 'bb_index' %}">Не обработанные</a></li>
         <li><a href="{% url 'accepted' %}">Одобренные</a></li>
         <li><a href="{% url 'declined' %}">Отклоненные</a></li>
-    </ul>
-    <ul>
         <li><a href="{% url 'okveds_list' %}">Список ОКВЭДов</a></li>
     </ul>
 </section>
 <section class="requests-list">
-    <table class>
-        <caption>Список ОКВЕДов</caption>
+
+    <table class="okveds_list_table">
+        <caption><a href="{% url 'create_okved' %}">Добавить ОКВЭД</a></caption>
         <tr class="requests-list-header">
             <th>№ ОКВЕД</th>
             <th>Название</th>
