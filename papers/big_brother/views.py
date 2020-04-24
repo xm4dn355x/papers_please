@@ -114,12 +114,18 @@ def okveds_list(request):
     if request.method == 'POST':
         query = request.POST
         okved_id = query.get('okved_id')
+        okved_number = query.get('okved_number')
         okved_name = query.get('okved_name')
         okved_description = query.get('okved_description')
-        edited_okved = Okveds_list.objects.get(id=okved_id)
-        edited_okved.okved_name = okved_name
-        edited_okved.okved_description = okved_description
-        edited_okved.save()
+        if 'delete' in query:
+            instance = Okveds_list.objects.get(id=okved_id)
+            instance.delete()
+        else:
+            edited_okved = Okveds_list.objects.get(id=okved_id)
+            edited_okved.okved_number = okved_number
+            edited_okved.okved_name = okved_name
+            edited_okved.okved_description = okved_description
+            edited_okved.save()
         okveds_list = Okveds_list.objects.all().order_by('okved_number')
         template = loader.get_template('big_brother/okveds_list.html')
         context = {'okveds_list': okveds_list}
@@ -143,7 +149,7 @@ def okved_card(request, okved_id):
 def create_okved(request):
     if request.method == 'POST':
         query = request.POST
-        okved_number = query.get('okved_id')
+        okved_number = query.get('okved_number')
         okved_name = query.get('okved_name')
         okved_description = query.get('okved_description')
         try:
