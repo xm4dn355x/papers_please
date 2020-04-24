@@ -253,6 +253,10 @@ textarea {
     width: 160px;
 }
 
+.nav-mngmt li:last-child{
+    margin-left: 150px;
+}
+
 ul {
     list-style: none;
     display: flex;
@@ -366,6 +370,14 @@ li {
     width: 100px;
 }
 
+.red_okved {
+    border: none;
+    background: darkred;
+    margin-left: 50px;
+    color: white;
+    width: 120px;
+}
+
 .pass_page {
     width: 90%;
     margin: 15px auto;
@@ -386,4 +398,9 @@ li {
 .pass_error p {
     font-size: 30px;
     margin-bottom: 35px;
+}
+
+.okveds_list_table caption {
+    text-align: left;
+    margin: 10px 0 10px 10px;
 }
