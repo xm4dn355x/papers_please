@@ -7,30 +7,41 @@
 <main>
     <section class="request_card">
         <fieldset>
+            {% if create == True %}
+            <form method="post" action="{% url 'create_okved' %}" class="nav_request_card">
+            {% else %}
             <form method="post" action="{% url 'okveds_list' %}" class="nav_request_card">
+            {% endif %}
                 {% csrf_token %}
                 <legend>Карточка ОКВЕДа</legend>
                 <br>
                 <label class="number_okved">
+                    {% if create == True %}
+                    <p><b>Код ОКВЭД: </b><br>
+                        <textarea name="okved_id" type="text" placeholder="Введите номер кода ОКВЭД"></textarea>
+                    </p>
+                    {% else %}
                     <input name="okved_id" type="text" style="display:None;" value="{{ okved.id }}">
                     <p><b>Код ОКВЭД: </b>{{ okved.okved_number }}</p>
+                    {% endif %}
                 </label><br><br>
                 <label>
                     <p><b>Название ОКВЭД:</b><br>
                         <textarea name="okved_name" placeholder="{{ okved.okved_name }}"></textarea></p>
                 </label>
-                {% if okved.okved_description == 'None' or okved.okved_description == None %}
-                <label>
-                        <textarea name="okved_description" style="display:None;"
-                                  placeholder="{{ okved.okved_description }}"></textarea><br>
-                </label>
-                {% else %}
                 <label>
                     <p><b>Описание ОКВЭД:</b><br>
+                {% if create == True %}
                         <textarea name="okved_description"
                                   placeholder="{{ okved.okved_description }}"></textarea><br><br>
-                </label>
+                {% elif okved.okved_description == 'None' or okved.okved_description == None %}
+                        <textarea name="okved_description" style="display:None;"
+                                  placeholder="{{ okved.okved_description }}"></textarea><br>
+                {% else %}
+                        <textarea name="okved_description"
+                                  placeholder="{{ okved.okved_description }}"></textarea><br><br>
                 {% endif %}
+                </label>
                 <input class="add-on" type="submit" name="submit" value="Сохранить">
             </form>
         </fieldset>
