@@ -17,6 +17,7 @@ Including another URLconf
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('', views.search_id, name='search_id'),
     path('car/', views.search_lp, name='search_lp')
