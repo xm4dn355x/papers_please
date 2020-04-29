@@ -25,5 +25,5 @@ urlpatterns = [
     path('okveds_list', views.okveds_list, name='okveds_list'),
     path('create_okved', views.create_okved, name='create_okved'),
     path('okved_card/?okved_id=<int:okved_id>', views.okved_card, name='okved_card'),
-    # path('pass_testing', views.pass_testing, name='pass_testing')
+    path('pass_testing', views.pass_testing, name='pass_testing')
 ]
