@@ -26,7 +26,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '192.168.0.1', '192.168.0.111', '212.220.15.188', ]
+ALLOWED_HOSTS = [ 'myyamal.ru', 'www.myyamal.ru', ]
 
 
 # Application definition
